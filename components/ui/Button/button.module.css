@@ -1,0 +1,57 @@
+.base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-2);
+  font-weight: var(--font-weight-regular);
+  width: 303px;
+  height: 45px;
+  border-radius: 5px;
+  background-color: var(--primary-button);
+  transition: all 350ms ease-out;
+  cursor: pointer;
+}
+
+.base:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.primary {
+  background-color: var(--color-black);
+  color: var(--color-gray);
+}
+
+.secondary {
+  background-color: var(--secondary-button);
+  color: var(--primary-background);
+}
+
+.tertiary {
+  height: 35px;
+  width: 360px;
+  border-radius: 8px;
+  background-color: var(--primary-button);
+  color: #9c9ca0;
+  border: 1px solid var(--primary-stroke);
+  font-size: var(--font-size-1);
+  font-weight: var(--font-weight-medium);
+}
+
+.tertiaryFilled {
+  width: 360px;
+  height: 35px;
+  color: #9c9ca0;
+  font-size: var(--font-size-1);
+  border-radius: 8px;
+  border-color: var(--primary-stroke);
+  font-weight: var(--font-weight-medium);
+  background-color: var(--primary-stroke);
+  will-change: border-color;
+}
+
+.tertiary:hover {
+  background-color: var(--color-black);
+  color: var(--tertiary-text);
+  border-color: var(--secondary-stroke);
+}
