@@ -39,7 +39,9 @@ export function CreateForm() {
         const data = await response.json();
         // router.push(`${data?.id}`);
         console.log(data);
-        alert(`Your playlist has been created! Go to /${data?.id} to view it!`);
+        alert(
+          `Your playlist has been created! Go to /${data?.data?.playlistId} to view it!`
+        );
         return data;
       })
       .then((data) => console.log(data))
