@@ -3,10 +3,14 @@ import { PlaylistI } from "@/utils/data";
 import { Button, FieldInput } from "../ui";
 import styles from "./createform.module.css";
 import { useState } from "react";
+import Link from "next/link";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export function CreateForm() {
+  const [submitStatus, setSubmitStatus] = useState<
+    "loading" | "idle" | "success" | "failed"
+  >("idle");
   const [fields, setFields] = useState<PlaylistI>({
     email: "",
     creator_name: "",
@@ -23,6 +27,7 @@ export function CreateForm() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setSubmitStatus("loading");
     await fetch(`${baseUrl}/playlist/v1/createPlaylist`, {
       method: "POST",
       headers: {
@@ -30,12 +35,19 @@ export function CreateForm() {
       },
       body: JSON.stringify(fields),
     })
-      .then((response) => {
-        console.log(response);
-        return response.json();
+      .then(async (response) => {
+        const data = await response.json();
+        // router.push(`${data?.id}`);
+        console.log(data);
+        alert(`Your playlist has been created! Go to /${data?.id} to view it!`);
+        return data;
       })
       .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        setSubmitStatus("failed");
+        return console.error(error);
+      });
+    setSubmitStatus("idle");
   }
 
   return (
@@ -78,7 +90,11 @@ export function CreateForm() {
         value={fields.theme}
         onChange={handleChange}
       /> */}
-      <Button type="submit" intent="tertiary">
+      <Button
+        type="submit"
+        intent={submitStatus === "loading" ? "tertiaryFilled" : "tertiary"}
+        disabled={submitStatus === "loading"}
+      >
         Create Playlist
       </Button>
     </form>
